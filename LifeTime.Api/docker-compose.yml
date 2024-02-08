@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  life-time-api:
+    image: life-time-api
+    container_name: life-time-api
+    restart: unless-stopped
+    ports:
+      - "8080:8080"

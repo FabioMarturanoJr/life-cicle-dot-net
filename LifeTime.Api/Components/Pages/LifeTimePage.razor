@@ -1,0 +1,58 @@
+﻿@page "/"
+@rendermode InteractiveServer
+
+@using LifeTime.Api.Service
+
+@inject ILifeTimeServiceTransient lifeTimeServiceTransient
+@inject ILifeTimeServiceScoped lifeTimeServiceScoped
+@inject ILifeTimeServiceSingleton lifeTimeServiceSingleton
+@inject IIntermediarioService intermediarioService
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Transient</th>
+            <th scope="col">Scoped</th>
+            <th scope="col">Singleton</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Serviço Direto</th>
+            <td>@IdLifeTimeTransient</td>
+            <td>@IdLifeTimeScoped</td>
+            <td>@IdLifeTimeSingleton</td>
+        </tr>
+        <tr>
+            <th scope="row">Serviço Intermediario</th>
+            <td>@IdLifeTimeByIntermediaryTransient</td>
+            <td>@IdLifeTimeByIntermediaryScoped</td>
+            <td>@IdLifeTimeByIntermediarySingleton</td>
+        </tr>
+    </tbody>
+</table>
+
+@code {
+    private string? IdLifeTimeTransient;
+    private string? IdLifeTimeScoped;
+    private string? IdLifeTimeSingleton;
+
+    private string? IdLifeTimeByIntermediaryTransient;
+    private string? IdLifeTimeByIntermediaryScoped;
+    private string? IdLifeTimeByIntermediarySingleton;
+
+
+    protected override void OnInitialized()
+    {
+
+        IdLifeTimeTransient = lifeTimeServiceTransient.GetIdLifeTime();
+        IdLifeTimeScoped = lifeTimeServiceScoped.GetIdLifeTime();
+        IdLifeTimeSingleton = lifeTimeServiceSingleton.GetIdLifeTime();
+
+        IdLifeTimeByIntermediaryTransient = intermediarioService.GetIdLifeTimeTransient();
+        IdLifeTimeByIntermediaryScoped = intermediarioService.GetIdLifeTimeScoped();
+        IdLifeTimeByIntermediarySingleton = intermediarioService.GetIdLifeTimeSingleton();
+        base.OnInitialized();
+    }
+}
